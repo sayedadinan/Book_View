@@ -3,6 +3,7 @@ import 'package:books_app/core/utils/extentions.dart';
 import 'package:books_app/core/widgets/app_customsizedbox.dart';
 import 'package:books_app/core/widgets/app_texts.dart';
 import 'package:books_app/features/authours/presentation/bloc/bloc/author_bloc.dart';
+import 'package:books_app/features/authours/presentation/widgets/author_list_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -48,10 +49,8 @@ class _AuthoursScreenState extends State<AuthoursScreen> {
                 );
               }
               if (state is AuthorLoading) {
-                return const Column(
-                  children: [
-                    Center(child: CircularProgressIndicator()),
-                  ],
+                return const Expanded(
+                  child: AuthorShimmer(),
                 );
               } else if (state is AuthorLoaded) {
                 if (state.authors.isEmpty) {
@@ -74,13 +73,13 @@ class _AuthoursScreenState extends State<AuthoursScreen> {
                               top: getProportionateScreenHeight(9)),
                           child: Container(
                             width: double.infinity,
-                            // height: getProportionateScreenHeight(60),
                             decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: const Color.fromARGB(
-                                        255, 220, 220, 220)),
-                                color: AppColors.whiteColor,
-                                borderRadius: BorderRadius.circular(9)),
+                              border: Border.all(
+                                color: const Color.fromARGB(255, 220, 220, 220),
+                              ),
+                              color: AppColors.whiteColor,
+                              borderRadius: BorderRadius.circular(9),
+                            ),
                             child: Row(
                               children: [
                                 const CustomSizedBoxWidth(9),
@@ -91,11 +90,12 @@ class _AuthoursScreenState extends State<AuthoursScreen> {
                                   maxRadius: 25,
                                   child: Center(
                                     child: CustomText(
-                                        text: author.name
-                                            .substring(0, 1)
-                                            .toUpperCase(),
-                                        size: 18,
-                                        color: AppColors.blackColor),
+                                      text: author.name
+                                          .substring(0, 1)
+                                          .toUpperCase(),
+                                      size: 18,
+                                      color: AppColors.blackColor,
+                                    ),
                                   ),
                                 ),
                                 CustomSizedBoxWidth(
@@ -124,7 +124,7 @@ class _AuthoursScreenState extends State<AuthoursScreen> {
                                               getProportionateScreenWidth(269),
                                           child: CustomText(
                                             textOverflow: TextOverflow.ellipsis,
-                                            maxLines: 2, // Limit to two lines
+                                            maxLines: 2,
                                             text: author.biography,
                                             size: 11,
                                             color: AppColors.greyColor,

@@ -3,8 +3,12 @@ import 'package:books_app/core/utils/extentions.dart';
 import 'package:books_app/core/widgets/app_customsizedbox.dart';
 import 'package:books_app/core/widgets/app_texts.dart';
 import 'package:books_app/features/books/domain/entities/book.dart';
+import 'package:books_app/features/books/presentation/bloc/bloc/rating_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+
+final ratingController = TextEditingController();
 
 class BookDetailsScreen extends StatelessWidget {
   final Book bookDetails;
@@ -155,7 +159,7 @@ class BookDetailsScreen extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      _showBottomSheet(context);
+                      _showBottomSheet(context, bookDetails.id);
                     },
                     child: Container(
                       width: getProportionateScreenWidth(90),
@@ -184,7 +188,7 @@ class BookDetailsScreen extends StatelessWidget {
   }
 }
 
-void _showBottomSheet(BuildContext context) {
+void _showBottomSheet(BuildContext context, String bookId) {
   showModalBottomSheet(
     context: context,
     shape: const RoundedRectangleBorder(
@@ -233,7 +237,7 @@ void _showBottomSheet(BuildContext context) {
                 color: Colors.amber,
               ),
               onRatingUpdate: (rating) {
-                print(rating);
+                ratingController.text = rating.toString();
               },
             ),
             const CustomSizedBoxHeight(16),
@@ -241,19 +245,33 @@ void _showBottomSheet(BuildContext context) {
               color: AppColors.lightGreyColor,
             ),
             const CustomSizedBoxHeight(14),
-            Container(
-              width: double.infinity,
-              height: getProportionateScreenHeight(40),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(7),
-                color: AppColors.primaryColor,
-              ),
-              child: const Center(
-                child: CustomText(
-                  color: AppColors.whiteColor,
-                  size: 12,
-                  text: 'Submit',
-                  weight: FontWeight.w600,
+            GestureDetector(
+              onTap: () {
+                final double rating = double.parse(ratingController.text);
+
+                // Convert the rating to an integer if needed
+
+                context.read<RatingBloc>().add(
+                      AddRatingEvent(
+                          bookId: bookId,
+                          rating: rating.round()), // Use `round()`
+                    );
+              
+              },
+              child: Container(
+                width: double.infinity,
+                height: getProportionateScreenHeight(40),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(7),
+                  color: AppColors.primaryColor,
+                ),
+                child: const Center(
+                  child: CustomText(
+                    color: AppColors.whiteColor,
+                    size: 12,
+                    text: 'Submit',
+                    weight: FontWeight.w600,
+                  ),
                 ),
               ),
             ),

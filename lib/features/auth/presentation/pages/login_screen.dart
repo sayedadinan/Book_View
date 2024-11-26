@@ -195,9 +195,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       child: Center(
                         child: (state is AuthLoading)
-                            ? const CircularProgressIndicator(
-                                strokeWidth: 50,
-                                color: AppColors.whiteColor,
+                            ? const SizedBox(
+                                width: 35,
+                                height: 35,
+                                child: const CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: AppColors.whiteColor,
+                                ),
                               )
                             : const CustomText(
                                 color: AppColors.whiteColor,

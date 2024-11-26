@@ -1,5 +1,6 @@
 import 'package:books_app/features/authours/presentation/bloc/bloc/author_bloc.dart';
 import 'package:books_app/features/books/presentation/bloc/bloc/book_bloc.dart';
+import 'package:books_app/features/books/presentation/bloc/bloc/rating_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:books_app/features/auth/presentation/pages/splash_screen.dart';
@@ -39,6 +40,10 @@ class MyApp extends StatelessWidget {
         BlocProvider<BookBloc>(
           create: (_) =>
               getIt<BookBloc>(), // Get the AuthBloc from DI container
+        ),
+        BlocProvider<RatingBloc>(
+          create: (_) =>
+              getIt<RatingBloc>(), // Get the AuthBloc from DI container
         ),
       ],
       child: MaterialApp(

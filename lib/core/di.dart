@@ -5,10 +5,15 @@ import 'package:books_app/features/authours/data/data_sources/author_remote_data
 import 'package:books_app/features/authours/data/repositories/author_repository_impl.dart';
 import 'package:books_app/features/authours/domain/repositories/author_repository.dart';
 import 'package:books_app/features/books/data/datasources/book_remote_data_source.dart';
+import 'package:books_app/features/books/data/datasources/rating_remote_data_source.dart';
 import 'package:books_app/features/books/data/repositories/book_repository_impl.dart';
+import 'package:books_app/features/books/data/repositories/rating_repository_impl.dart';
 import 'package:books_app/features/books/domain/repositeries/book_repository.dart';
+import 'package:books_app/features/books/domain/repositeries/rating_repository.dart';
+import 'package:books_app/features/books/domain/usecase/add_rating.dart';
 import 'package:books_app/features/books/domain/usecase/get_books.dart';
 import 'package:books_app/features/books/presentation/bloc/bloc/book_bloc.dart';
+import 'package:books_app/features/books/presentation/bloc/bloc/rating_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:books_app/features/auth/data/datasources/auth_remote_data_source.dart';
@@ -45,12 +50,12 @@ void setupDependencyInjection() {
   getIt.registerLazySingleton<AuthorRepository>(
       () => AuthorRepositoryImpl(remoteDataSource: getIt()));
 
-  getIt.registerLazySingleton<GetAuthors>(
-      () => GetAuthors(repository: getIt()));
+  getIt
+      .registerLazySingleton<GetAuthors>(() => GetAuthors(repository: getIt()));
 
   getIt.registerFactory<AuthorBloc>(() => AuthorBloc(getAuthors: getIt()));
 
-  // --- Books Module ---
+  // --------------------Books Module ------------------------------------------
   // Registering Book Remote Data Source
   getIt.registerLazySingleton<BookRemoteDataSource>(
       () => BookRemoteDataSourceImpl(client: getIt()));
@@ -62,6 +67,12 @@ void setupDependencyInjection() {
   // Registering GetBooks Use Case
   getIt.registerLazySingleton<GetBooks>(() => GetBooks(repository: getIt()));
 
-  // Registering Book Bloc
+  // ---------------------rating things paart ------------------------------------------
   getIt.registerFactory<BookBloc>(() => BookBloc(getBooks: getIt()));
+  getIt.registerLazySingleton<RatingRemoteDataSource>(
+      () => RatingRemoteDataSourceImpl(client: getIt()));
+  getIt.registerLazySingleton<RatingRepository>(
+      () => RatingRepositoryImpl(remoteDataSource: getIt()));
+  getIt.registerLazySingleton<AddRating>(() => AddRating(repository: getIt()));
+  getIt.registerFactory<RatingBloc>(() => RatingBloc(addRating: getIt()));
 }

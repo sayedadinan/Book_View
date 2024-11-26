@@ -4,6 +4,7 @@ import 'package:books_app/core/widgets/app_customsizedbox.dart';
 import 'package:books_app/core/widgets/app_texts.dart';
 import 'package:books_app/features/books/presentation/bloc/bloc/book_bloc.dart';
 import 'package:books_app/features/books/presentation/pages/book_details_screen.dart';
+import 'package:books_app/features/books/presentation/widgets/grid_shimmer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,42 +42,40 @@ class _BookScreenState extends State<BookScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
-      body: BlocBuilder<BookBloc, BookState>(
-        builder: (context, state) {
-          if (state is BookLoading && currentPage == 1) {
-            // Show loading indicator only for the first load
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (state is BookLoaded) {
-            final books = state.books;
-            _isFetching = false; // Reset fetching flag
+      body: Padding(
+        padding: EdgeInsets.only(
+          left: getProportionateScreenWidth(14),
+          right: getProportionateScreenWidth(14),
+        ),
+        child: Column(
+          children: [
+            const CustomSizedBoxHeight(34),
+            const Row(
+              children: [
+                CustomText(
+                  color: AppColors.blackColor,
+                  size: 24,
+                  text: 'App name',
+                  weight: FontWeight.w500,
+                ),
+              ],
+            ),
+            const CustomSizedBoxHeight(12),
+            CupertinoSearchTextField(
+              onChanged: (value) {
+                context.read<BookBloc>().add(SearchBooksEvent(value));
+              },
+              placeholder: "Search books...",
+            ),
+            BlocBuilder<BookBloc, BookState>(
+              builder: (context, state) {
+                if (state is BookLoading && currentPage == 1) {
+                  return const Expanded(child: GridShimmer());
+                } else if (state is BookLoaded) {
+                  final books = state.books;
+                  _isFetching = false; // Reset fetching flag
 
-            return Padding(
-              padding: EdgeInsets.only(
-                  left: getProportionateScreenWidth(14),
-                  right: getProportionateScreenWidth(14)),
-              child: Column(
-                children: [
-                  const CustomSizedBoxHeight(34),
-                  const Row(
-                    children: [
-                      CustomText(
-                        color: AppColors.blackColor,
-                        size: 24,
-                        text: 'App name',
-                        weight: FontWeight.w500,
-                      ),
-                    ],
-                  ),
-                  const CustomSizedBoxHeight(12),
-                  CupertinoSearchTextField(
-                    onChanged: (value) {
-                      context.read<BookBloc>().add(SearchBooksEvent(value));
-                    },
-                    placeholder: "Search books...",
-                  ),
-                  Expanded(
+                  return Expanded(
                     child: GridView.builder(
                       controller: _scrollController,
                       gridDelegate:
@@ -91,9 +90,13 @@ class _BookScreenState extends State<BookScreen> {
                         final book = books[index];
                         return GestureDetector(
                           onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) =>
-                                    BookDetailsScreen(bookDetails: book)));
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => BookDetailsScreen(
+                                  bookDetails: book,
+                                ),
+                              ),
+                            );
                           },
                           child: Container(
                             decoration: BoxDecoration(
@@ -128,7 +131,8 @@ class _BookScreenState extends State<BookScreen> {
                                 const CustomSizedBoxHeight(14),
                                 Padding(
                                   padding: EdgeInsets.only(
-                                      left: getProportionateScreenWidth(12)),
+                                    left: getProportionateScreenWidth(12),
+                                  ),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -175,27 +179,31 @@ class _BookScreenState extends State<BookScreen> {
                         );
                       },
                     ),
-                  ),
-                  if (state is BookLoading && currentPage > 1)
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: CircularProgressIndicator(),
+                  );
+                } else if (state is BookError) {
+                  return Expanded(
+                    child: Center(
+                      child: Text(
+                        state.message,
+                        style: const TextStyle(color: Colors.red),
+                      ),
                     ),
-                ],
-              ),
-            );
-          } else if (state is BookError) {
-            return Center(
-              child: Text(
-                state.message,
-                style: const TextStyle(color: Colors.red),
-              ),
-            );
-          }
-          return const Center(
-            child: Text("Unexpected error occurred."),
-          );
-        },
+                  );
+                }
+                return const Expanded(
+                  child: Center(
+                    child: Text("Unexpected error occurred."),
+                  ),
+                );
+              },
+            ),
+            // if (state is BookLoading && currentPage > 1)
+            //   const Padding(
+            //     padding: EdgeInsets.all(8.0),
+            //     child: CircularProgressIndicator(),
+            //   ),
+          ],
+        ),
       ),
     );
   }
