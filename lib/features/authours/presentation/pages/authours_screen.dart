@@ -2,11 +2,23 @@ import 'package:books_app/core/theme/color_scheme.dart';
 import 'package:books_app/core/utils/extentions.dart';
 import 'package:books_app/core/widgets/app_customsizedbox.dart';
 import 'package:books_app/core/widgets/app_texts.dart';
-import 'package:books_app/features/books/presentation/pages/book_details_screen.dart';
+import 'package:books_app/features/authours/presentation/bloc/bloc/author_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AuthoursScreen extends StatelessWidget {
+class AuthoursScreen extends StatefulWidget {
   const AuthoursScreen({super.key});
+
+  @override
+  State<AuthoursScreen> createState() => _AuthoursScreenState();
+}
+
+class _AuthoursScreenState extends State<AuthoursScreen> {
+  @override
+  void initState() {
+    context.read<AuthorBloc>().add(FetchAuthorsEvent());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,85 +41,114 @@ class AuthoursScreen extends StatelessWidget {
                 ),
               ],
             ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: 4,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const BookDetailsScreen()));
-                    },
-                    child: Padding(
-                      padding:
-                          EdgeInsets.only(top: getProportionateScreenHeight(9)),
-                      child: Container(
-                        width: double.infinity,
-                        // height: getProportionateScreenHeight(60),
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                color:
-                                    const Color.fromARGB(255, 220, 220, 220)),
-                            color: AppColors.whiteColor,
-                            borderRadius: BorderRadius.circular(9)),
-                        child: Row(
-                          children: [
-                            const CustomSizedBoxWidth(9),
-                            const CircleAvatar(
-                              maxRadius: 25,
-                              child: Center(
-                                child: CustomText(
-                                    text: 'R',
-                                    size: 18,
-                                    color: AppColors.blackColor),
-                              ),
-                            ),
-                            CustomSizedBoxWidth(
-                                getProportionateScreenWidth(10)),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                CustomSizedBoxHeight(
-                                    getProportionateScreenHeight(9)),
-                                const Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    CustomText(
-                                      text: 'James Clear',
-                                      size: 13,
-                                      color: AppColors.blackColor,
-                                      weight: FontWeight.w400,
-                                    )
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    SizedBox(
-                                      width: getProportionateScreenWidth(269),
-                                      child: const CustomText(
-                                        textOverflow: TextOverflow.ellipsis,
-                                        maxLines: 2, // Limit to two lines
-                                        text:
-                                            'Lorem ipsum dolor sit amet consectetur. Phasellus amet placerat dictum mauris quam. At sagittis faucibus massa quam amet suscipit elementum neque nec. Duis natoque quam augue sit at et et quis. Ut et orci velit magna aliquam.',
-                                        size: 11,
-                                        color: AppColors.greyColor,
-                                        weight: FontWeight.w400,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                CustomSizedBoxHeight(
-                                    getProportionateScreenHeight(9)),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
+            BlocBuilder<AuthorBloc, AuthorState>(builder: (context, state) {
+              if (state is AuthorError) {
+                return const Center(
+                  child: Text('Error'),
+                );
+              }
+              if (state is AuthorLoading) {
+                return const Column(
+                  children: [
+                    Center(child: CircularProgressIndicator()),
+                  ],
+                );
+              } else if (state is AuthorLoaded) {
+                if (state.authors.isEmpty) {
+                  return const Center(
+                    child: Text('No authors found'),
                   );
-                },
-              ),
-            )
+                }
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: state.authors.length,
+                    itemBuilder: (context, index) {
+                      final author = state.authors[index];
+                      return GestureDetector(
+                        onTap: () {
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //     builder: (context) => const BookDetailsScreen()));
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              top: getProportionateScreenHeight(9)),
+                          child: Container(
+                            width: double.infinity,
+                            // height: getProportionateScreenHeight(60),
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: const Color.fromARGB(
+                                        255, 220, 220, 220)),
+                                color: AppColors.whiteColor,
+                                borderRadius: BorderRadius.circular(9)),
+                            child: Row(
+                              children: [
+                                const CustomSizedBoxWidth(9),
+                                CircleAvatar(
+                                  backgroundColor: index.isEven
+                                      ? Colors.lightGreen[50]
+                                      : Colors.lightBlueAccent[50],
+                                  maxRadius: 25,
+                                  child: Center(
+                                    child: CustomText(
+                                        text: author.name
+                                            .substring(0, 1)
+                                            .toUpperCase(),
+                                        size: 18,
+                                        color: AppColors.blackColor),
+                                  ),
+                                ),
+                                CustomSizedBoxWidth(
+                                    getProportionateScreenWidth(10)),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    CustomSizedBoxHeight(
+                                        getProportionateScreenHeight(9)),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        CustomText(
+                                          text: author.name,
+                                          size: 13,
+                                          color: AppColors.blackColor,
+                                          weight: FontWeight.w400,
+                                        )
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        SizedBox(
+                                          width:
+                                              getProportionateScreenWidth(269),
+                                          child: CustomText(
+                                            textOverflow: TextOverflow.ellipsis,
+                                            maxLines: 2, // Limit to two lines
+                                            text: author.biography,
+                                            size: 11,
+                                            color: AppColors.greyColor,
+                                            weight: FontWeight.w400,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    CustomSizedBoxHeight(
+                                        getProportionateScreenHeight(9)),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                );
+              }
+
+              return const SizedBox();
+            })
           ],
         ),
       ),
