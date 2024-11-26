@@ -1,10 +1,19 @@
-part of 'auth_bloc.dart';
+part of 'auth_bloc_bloc.dart';
 
-// Base class for states
-abstract class AuthBlocState {}
+abstract class AuthState {}
 
-// State for when the password is hidden
-class PasswordHidden extends AuthBlocState {}
+class AuthInitial extends AuthState {}
 
-// State for when the password is visible
-class PasswordVisible extends AuthBlocState {}
+class AuthLoading extends AuthState {}
+
+class AuthSuccess extends AuthState {
+  final String message;
+
+  AuthSuccess({required this.message});
+}
+
+class AuthFailure extends AuthState {
+  final String error;
+
+  AuthFailure({required this.error});
+}

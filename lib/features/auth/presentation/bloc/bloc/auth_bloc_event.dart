@@ -1,7 +1,9 @@
-part of 'auth_bloc.dart';
+part of 'auth_bloc_bloc.dart';
+abstract class AuthEvent {}
 
-// Base class for events
-abstract class AuthBlocEvent {}
+class RegisterUserEvent extends AuthEvent {
+  final String username;
+  final String password;
 
-// Event to toggle password visibility
-class ToggleBloc extends AuthBlocEvent {}
+  RegisterUserEvent({required this.username, required this.password});
+}

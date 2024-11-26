@@ -7,6 +7,7 @@ class AppColors {
   static const Color blackColor = Colors.black;
   static const Color lightRoseColor = Color(0xFFFFE0E0);
   static const Color lightGreyColor = Color.fromARGB(255, 220, 220, 220);
+  static const Color successColor = Colors.green;
   static const Gradient gradient = LinearGradient(
     colors: [
       Color(0xFFF59504), // Yellowish Orange
