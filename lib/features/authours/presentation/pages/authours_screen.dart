@@ -33,7 +33,7 @@ class _AuthoursScreenState extends State<AuthoursScreen> {
         child: Column(
           children: [
             const CustomSizedBoxHeight(34),
-            const TitleWidget(title: 'App name'),
+            const TitleWidget(title: 'Authors'),
             BlocBuilder<AuthorBloc, AuthorState>(builder: (context, state) {
               if (state is AuthorError) {
                 return const Center(
