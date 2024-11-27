@@ -5,7 +5,6 @@ part 'theme_state.dart';
 class ColorSwitchBloc extends Bloc<ColorSwitchEvent, ColorSwitchState> {
   ColorSwitchBloc() : super(ColorSwitchLightState());
 
-  @override
   Stream<ColorSwitchState> mapEventToState(ColorSwitchEvent event) async* {
     if (event is ToggleColorEvent) {
       if (state is ColorSwitchLightState) {
