@@ -1,3 +1,4 @@
+import 'package:books_app/core/route.dart';
 import 'package:books_app/core/theme/color_scheme.dart';
 import 'package:books_app/core/utils/extentions.dart';
 import 'package:books_app/core/widgets/app_customsizedbox.dart';
@@ -90,10 +91,11 @@ class _BookScreenState extends State<BookScreen> {
                         final book = books[index];
                         return GestureDetector(
                           onTap: () {
-                            context.push(
-                              '/book-details',
-                              extra: book,
-                            );
+                            context.push('/book-details',
+                                extra: BookDetailsArguments(
+                                    bookDetails: book,
+                                    additionalData:
+                                        AppColors.colorList[index]));
                           },
                           child: Container(
                             decoration: BoxDecoration(

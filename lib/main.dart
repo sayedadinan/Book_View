@@ -4,7 +4,6 @@ import 'package:books_app/features/books/presentation/bloc/bloc/book_bloc.dart';
 import 'package:books_app/features/books/presentation/bloc/bloc/rating_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:books_app/features/auth/presentation/pages/splash_screen.dart';
 import 'package:books_app/core/utils/extentions.dart';
 import 'package:books_app/core/utils/shared_preference.dart';
 import 'package:books_app/core/di.dart'; // Import DI setup
@@ -19,10 +18,12 @@ void main() async {
   // Setup Dependency Injection (DI)
   setupDependencyInjection();
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     AppMediaquery().init(context);

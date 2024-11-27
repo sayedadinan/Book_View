@@ -3,7 +3,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:books_app/core/utils/extentions.dart'; // Replace with your actual extensions.
 
 class GridShimmer extends StatelessWidget {
-  const GridShimmer({Key? key}) : super(key: key);
+  const GridShimmer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +36,9 @@ class GridShimmer extends StatelessWidget {
                   Container(
                     height: getProportionateScreenHeight(160),
                     width: double.infinity,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Colors.grey,
-                      borderRadius: const BorderRadius.vertical(
+                      borderRadius: BorderRadius.vertical(
                         top: Radius.circular(8),
                       ),
                     ),

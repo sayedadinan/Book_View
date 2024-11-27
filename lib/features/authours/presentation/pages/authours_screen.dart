@@ -81,9 +81,7 @@ class _AuthoursScreenState extends State<AuthoursScreen> {
                               children: [
                                 const CustomSizedBoxWidth(9),
                                 CircleAvatar(
-                                  backgroundColor: index.isEven
-                                      ? Colors.lightGreen[50]
-                                      : Colors.lightBlueAccent[50],
+                                  backgroundColor: AppColors.colorList[index],
                                   maxRadius: 25,
                                   child: Center(
                                     child: CustomText(

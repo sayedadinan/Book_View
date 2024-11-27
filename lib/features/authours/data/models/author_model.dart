@@ -2,16 +2,11 @@ import 'package:books_app/features/authours/domain/entities/author.dart';
 
 class AuthorModel extends Author {
   AuthorModel({
-    required String id,
-    required String name,
-    required DateTime birthdate,
-    required String biography,
-  }) : super(
-          id: id,
-          name: name,
-          birthdate: birthdate,
-          biography: biography,
-        );
+    required super.id,
+    required super.name,
+    required super.birthdate,
+    required super.biography,
+  });
 
   factory AuthorModel.fromJson(Map<String, dynamic> json) {
     return AuthorModel(

@@ -2,14 +2,10 @@ import 'package:books_app/features/auth/domain/entities/auth.dart';
 
 class AuthModel extends Auth {
   AuthModel({
-    required String accessToken,
-    required String tokenType,
-    required String message,
-  }) : super(
-          accessToken: accessToken,
-          tokenType: tokenType,
-          message: message,
-        );
+    required super.accessToken,
+    required super.tokenType,
+    required super.message,
+  });
 
   factory AuthModel.fromJson(Map<String, dynamic> json) {
     return AuthModel(

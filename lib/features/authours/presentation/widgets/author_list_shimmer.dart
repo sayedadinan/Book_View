@@ -4,7 +4,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:books_app/core/utils/extentions.dart';
 
 class AuthorShimmer extends StatelessWidget {
-  const AuthorShimmer({Key? key}) : super(key: key);
+  const AuthorShimmer({super.key});
 
   @override
   Widget build(BuildContext context) {

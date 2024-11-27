@@ -42,7 +42,7 @@ void showBottomSheetRating(BuildContext context, String bookId) {
               weight: FontWeight.w600,
             ),
             const CustomSizedBoxHeight(12),
-            Divider(
+            const Divider(
               color: AppColors.lightGreyColor,
             ),
             const CustomSizedBoxHeight(16),
@@ -52,8 +52,8 @@ void showBottomSheetRating(BuildContext context, String bookId) {
               direction: Axis.horizontal,
               allowHalfRating: true,
               itemCount: 5,
-              itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-              itemBuilder: (context, _) => Icon(
+              itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+              itemBuilder: (context, _) => const Icon(
                 Icons.star,
                 color: Colors.amber,
               ),
@@ -62,7 +62,7 @@ void showBottomSheetRating(BuildContext context, String bookId) {
               },
             ),
             const CustomSizedBoxHeight(16),
-            Divider(
+            const Divider(
               color: AppColors.lightGreyColor,
             ),
             const CustomSizedBoxHeight(14),

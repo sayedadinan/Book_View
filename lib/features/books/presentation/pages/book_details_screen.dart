@@ -8,14 +8,23 @@ import 'package:books_app/features/books/presentation/widgets/rating_sheet.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 final ratingController = TextEditingController();
+String formatPublishedDate(DateTime? publishedDate) {
+  if (publishedDate == null) {
+    return 'Unknown'; // Handle null value if necessary
+  }
+  return DateFormat('MMMM d, yyyy').format(publishedDate);
+}
 
 class BookDetailsScreen extends StatelessWidget {
   final Book bookDetails;
-  const BookDetailsScreen({super.key, required this.bookDetails});
+  final Color colorthing;
+  const BookDetailsScreen(
+      {super.key, required this.bookDetails, required this.colorthing});
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +72,7 @@ class BookDetailsScreen extends StatelessWidget {
               Container(
                 width: double.infinity,
                 height: getProportionateScreenHeight(300),
-                color: AppColors.lightRoseColor,
+                color: colorthing,
                 child: Center(
                   child: SizedBox(
                     height: getProportionateScreenHeight(260),
@@ -133,7 +142,8 @@ class BookDetailsScreen extends StatelessWidget {
                     CustomText(
                       color: AppColors.greyColor,
                       size: 11,
-                      text: 'Published date: ${bookDetails.publishedDate}',
+                      text:
+                          'Published date: ${formatPublishedDate(bookDetails.publishedDate)}',
                       weight: FontWeight.w400,
                     ),
                     const CustomSizedBoxHeight(8),
