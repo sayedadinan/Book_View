@@ -4,6 +4,7 @@ import 'package:books_app/core/widgets/app_customsizedbox.dart';
 import 'package:books_app/core/widgets/app_textfield.dart';
 import 'package:books_app/core/widgets/app_texts.dart';
 import 'package:books_app/features/auth/presentation/bloc/bloc/auth_bloc_bloc.dart';
+import 'package:books_app/features/auth/presentation/widgets/login_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -146,60 +147,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     hinttext: 'Confirm your password',
                   ),
                   const CustomSizedBoxHeight(16),
-                  GestureDetector(
-                    onTap: () {
-                      if (passwordController.text !=
-                          confirmPasswordController.text) {
-                        showTopSnackBar(
-                          Overlay.of(context),
-                          const CustomSnackBar.error(
-                            message:
-                                "Password and Confirm password should be same",
-                          ),
-                        );
-                      }
-                      if (usernameController.text.isEmpty ||
-                          passwordController.text.isEmpty) {
-                        showTopSnackBar(
-                          Overlay.of(context),
-                          const CustomSnackBar.error(
-                            message: "name and password should not be empty",
-                          ),
-                        );
-                      } else {
-                        context.read<AuthBloc>().add(
-                              RegisterUserEvent(
-                                username: usernameController.text,
-                                password: passwordController.text,
-                              ),
-                            );
-                      }
-                    },
-                    child: Container(
-                      width: double.infinity,
-                      height: getProportionateScreenHeight(40),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(7),
-                        color: AppColors.primaryColor,
-                      ),
-                      child: Center(
-                        child: (state is AuthLoading)
-                            ? const SizedBox(
-                                width: 35,
-                                height: 35,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                  color: AppColors.whiteColor,
-                                ),
-                              )
-                            : const CustomText(
-                                color: AppColors.whiteColor,
-                                size: 12,
-                                text: 'Register',
-                                weight: FontWeight.w600,
-                              ),
-                      ),
-                    ),
+                  LoginButton(
+                    passwordController: passwordController,
+                    confirmPasswordController: confirmPasswordController,
+                    usernameController: usernameController,
+                    state: state,
                   ),
                 ],
               ),

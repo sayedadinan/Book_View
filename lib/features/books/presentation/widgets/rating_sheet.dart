@@ -35,7 +35,7 @@ void showBottomSheetRating(BuildContext context, String bookId) {
               ),
             ),
             const CustomSizedBoxHeight(12),
-            const CustomText(
+             CustomText(
               color: AppColors.blackColor,
               size: 18,
               text: 'Add rating',
@@ -85,7 +85,7 @@ void showBottomSheetRating(BuildContext context, String bookId) {
                   borderRadius: BorderRadius.circular(7),
                   color: AppColors.primaryColor,
                 ),
-                child: const Center(
+                child:  Center(
                   child: CustomText(
                     color: AppColors.whiteColor,
                     size: 12,

@@ -1,12 +1,25 @@
+// app_colors.dart
 import 'package:flutter/material.dart';
 
 class AppColors {
+  static Color whiteColor = Colors.white;
+  static Color blackColor = Colors.black;
+
+  static void switchToDark() {
+    whiteColor = Colors.black;
+    blackColor = Colors.white;
+  }
+
+  static void switchToLight() {
+    whiteColor = Colors.white;
+    blackColor = Colors.black;
+  }
+
   static const Color primaryColor = Color(0xFFF56C04); // Vibrant Orange
-  static const Color whiteColor = Colors.white; // Pure White
   static const Color greyColor = Color(0xFF5C5C5C); // Dark Grey
-  static const Color blackColor = Colors.black; // Pure Black
   static const Color lightRoseColor = Color(0xFFFFE0E0); // Light Rose Pink
-  static const Color lightGreyColor = Color.fromARGB(255, 220, 220, 220); // Soft Grey
+  static const Color lightGreyColor =
+      Color.fromARGB(255, 220, 220, 220); // Soft Grey
   static const Color successColor = Colors.green; // Green for Success
   static const Gradient gradient = LinearGradient(
     colors: [

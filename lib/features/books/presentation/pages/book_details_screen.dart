@@ -4,7 +4,7 @@ import 'package:books_app/core/widgets/app_customsizedbox.dart';
 import 'package:books_app/core/widgets/app_texts.dart';
 import 'package:books_app/features/books/domain/entities/book.dart';
 import 'package:books_app/features/books/presentation/bloc/bloc/rating_bloc.dart';
-import 'package:books_app/features/books/presentation/widgets/rating_sheet.dart';
+import 'package:books_app/features/books/presentation/widgets/bottom_price_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -15,7 +15,7 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 final ratingController = TextEditingController();
 String formatPublishedDate(DateTime? publishedDate) {
   if (publishedDate == null) {
-    return 'Unknown'; // Handle null value if necessary
+    return 'Unknown';
   }
   return DateFormat('MMMM d, yyyy').format(publishedDate);
 }
@@ -61,7 +61,7 @@ class BookDetailsScreen extends StatelessWidget {
                         onPressed: () {
                           context.pop();
                         },
-                        icon: const Icon(
+                        icon:  Icon(
                           Icons.arrow_back_ios,
                           color: AppColors.blackColor,
                         ))
@@ -160,55 +160,7 @@ class BookDetailsScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: Container(
-        width: double.infinity,
-        height: getProportionateScreenHeight(58),
-        decoration: const BoxDecoration(
-            color: AppColors.whiteColor,
-            border: Border(top: BorderSide(color: AppColors.lightGreyColor))),
-        child: Padding(
-          padding: EdgeInsets.only(
-              left: getProportionateScreenWidth(14),
-              right: getProportionateScreenWidth(14)),
-          child: Column(
-            children: [
-              const CustomSizedBoxHeight(8),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CustomText(
-                    color: AppColors.blackColor,
-                    size: 16,
-                    text: '₹ ${bookDetails.price}',
-                    weight: FontWeight.w700,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      showBottomSheetRating(context, bookDetails.id);
-                    },
-                    child: Container(
-                      width: getProportionateScreenWidth(90),
-                      height: getProportionateScreenHeight(30),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(7),
-                          color: AppColors.primaryColor),
-                      child: const Center(
-                        child: CustomText(
-                          color: AppColors.whiteColor,
-                          size: 13,
-                          text: 'Add rating',
-                          weight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              const CustomSizedBoxHeight(10)
-            ],
-          ),
-        ),
-      ),
+      bottomNavigationBar: BottomPriceContainer(bookDetails: bookDetails),
     );
   }
 }
