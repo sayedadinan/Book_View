@@ -64,10 +64,7 @@ class _AuthoursScreenState extends State<AuthoursScreen> {
                     itemBuilder: (context, index) {
                       final author = state.authors[index];
                       return GestureDetector(
-                        onTap: () {
-                          // Navigator.of(context).push(MaterialPageRoute(
-                          //     builder: (context) => const BookDetailsScreen()));
-                        },
+                        onTap: () {},
                         child: Padding(
                           padding: EdgeInsets.only(
                               top: getProportionateScreenHeight(9)),

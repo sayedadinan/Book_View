@@ -1,3 +1,4 @@
+import 'package:books_app/core/route.dart';
 import 'package:books_app/features/authours/presentation/bloc/bloc/author_bloc.dart';
 import 'package:books_app/features/books/presentation/bloc/bloc/book_bloc.dart';
 import 'package:books_app/features/books/presentation/bloc/bloc/rating_bloc.dart';
@@ -46,14 +47,15 @@ class MyApp extends StatelessWidget {
               getIt<RatingBloc>(), // Get the AuthBloc from DI container
         ),
       ],
-      child: MaterialApp(
+      child: MaterialApp.router(
+        routerConfig: router,
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: SplashScreen(),
+        // home: SplashScreen(),
       ),
     );
   }

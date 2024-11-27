@@ -3,11 +3,11 @@ import 'package:books_app/core/utils/extentions.dart';
 import 'package:books_app/core/widgets/app_customsizedbox.dart';
 import 'package:books_app/core/widgets/app_texts.dart';
 import 'package:books_app/features/books/presentation/bloc/bloc/book_bloc.dart';
-import 'package:books_app/features/books/presentation/pages/book_details_screen.dart';
 import 'package:books_app/features/books/presentation/widgets/grid_shimmer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class BookScreen extends StatefulWidget {
   const BookScreen({super.key});
@@ -90,12 +90,9 @@ class _BookScreenState extends State<BookScreen> {
                         final book = books[index];
                         return GestureDetector(
                           onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => BookDetailsScreen(
-                                  bookDetails: book,
-                                ),
-                              ),
+                            context.push(
+                              '/book-details',
+                              extra: book,
                             );
                           },
                           child: Container(

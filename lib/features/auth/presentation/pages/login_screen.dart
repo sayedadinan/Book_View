@@ -4,9 +4,9 @@ import 'package:books_app/core/widgets/app_customsizedbox.dart';
 import 'package:books_app/core/widgets/app_textfield.dart';
 import 'package:books_app/core/widgets/app_texts.dart';
 import 'package:books_app/features/auth/presentation/bloc/bloc/auth_bloc_bloc.dart';
-import 'package:books_app/features/books/presentation/pages/bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
@@ -29,22 +29,13 @@ class _LoginScreenState extends State<LoginScreen> {
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthSuccess) {
-          // ScaffoldMessenger.of(context).showSnackBar(
-          //   const SnackBar(
-          //     content: Text('Successfully Logged In'),
-          //     backgroundColor: AppColors.successColor,
-          //   ),
-          // );
           showTopSnackBar(
             Overlay.of(context),
-            CustomSnackBar.success(
+            const CustomSnackBar.success(
               message: "Successfully User Registered",
             ),
           );
-          // Navigate to another page or show success message
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => const BottomBar(),
-          ));
+          context.go('/home');
         } else if (state is AuthFailure) {
           showTopSnackBar(
             Overlay.of(context),
@@ -157,8 +148,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   const CustomSizedBoxHeight(16),
                   GestureDetector(
                     onTap: () {
-                      // Navigator.of(context).push(MaterialPageRoute(
-                      //     builder: (context) => const BottomBar()));
                       if (passwordController.text !=
                           confirmPasswordController.text) {
                         showTopSnackBar(
