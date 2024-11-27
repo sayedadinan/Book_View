@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
           create: (_) => getIt<RatingBloc>(),
         ),
         BlocProvider<ColorSwitchBloc>(
-          create: (_) => ColorSwitchBloc(), // ThemeBloc for managing themes
+          create: (_) => ColorSwitchBloc(), 
         ),
       ],
       child: BlocBuilder<ColorSwitchBloc, ColorSwitchState>(
@@ -64,7 +64,7 @@ class MyApp extends StatelessWidget {
               useMaterial3: true,
             );
           } else {
-            themeData = ThemeData.light(); // Fallback theme
+            themeData = ThemeData.light(); 
           }
 
           return MaterialApp.router(

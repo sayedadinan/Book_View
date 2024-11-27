@@ -31,7 +31,7 @@ void setupDependencyInjection() {
   // Registering http client
   getIt.registerLazySingleton<http.Client>(() => http.Client());
 
-  // --- Auth Module ---
+  // ------------------------- Auth Module -------------------------------------
   getIt.registerLazySingleton<AuthRemoteDataSource>(
       () => AuthRemoteDataSourceImpl(client: getIt()));
 
@@ -43,7 +43,7 @@ void setupDependencyInjection() {
 
   getIt.registerFactory<AuthBloc>(() => AuthBloc(registerUser: getIt()));
 
-  // --- Author Module ---
+  // --------------------- Author Module ---------------------------------------
   getIt.registerLazySingleton<AuthorRemoteDataSource>(
       () => AuthorRemoteDataSourceImpl(client: getIt()));
 
@@ -67,7 +67,7 @@ void setupDependencyInjection() {
   // Registering GetBooks Use Case
   getIt.registerLazySingleton<GetBooks>(() => GetBooks(repository: getIt()));
 
-  // ---------------------rating things paart ------------------------------------------
+  // ---------------------rating things paart ----------------------------------
   getIt.registerFactory<BookBloc>(() => BookBloc(getBooks: getIt()));
   getIt.registerLazySingleton<RatingRemoteDataSource>(
       () => RatingRemoteDataSourceImpl(client: getIt()));

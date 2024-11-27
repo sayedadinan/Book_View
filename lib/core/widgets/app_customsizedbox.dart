@@ -13,6 +13,7 @@ class CustomSizedBoxHeight extends StatelessWidget {
     );
   }
 }
+//----------->>>>>>>>>>>>>>>>>>>>>> This is the widgets using for empty spaces in height and width<<<<<<<<<<<<<<<<<<<----------------
 
 class CustomSizedBoxWidth extends StatelessWidget {
   final double width;
